@@ -3,10 +3,29 @@ from matrix import *
 from gmath import *
 
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
-    pass
+    add_edge (polygons, x0, y0, z0, x1, y1, z1)
+    add_edge (polygons, x1, y1, z1, x2, y2, z2)
+    add_edge (polygons, x2, y2, z2, x0, y0, z0)
 
 def draw_polygons( polygons, screen, color ):
-    pass
+    point = 0
+    while point < len(polygons) - 1:
+        draw_line( int(polygons[point][0]),
+                   int(polygons[point][1]),
+                   int(polygons[point+1][0]),
+                   int(polygons[point+1][1]),
+                   screen, color)
+        draw_line( int(polygons[point+1][0]),
+                   int(polygons[point+1][1]),
+                   int(polygons[point+2][0]),
+                   int(polygons[point+2][1]),
+                   screen, color)
+        draw_line( int(polygons[point][0]),
+                   int(polygons[point][1]),
+                   int(polygons[point+2][0]),
+                   int(polygons[point+2][1]),
+                   screen, color)
+        point+= 3
 
 
 def add_box( polygons, x, y, z, width, height, depth ):
