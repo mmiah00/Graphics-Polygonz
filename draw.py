@@ -34,22 +34,36 @@ def add_box( polygons, x, y, z, width, height, depth ):
     z1 = z - depth
 
     #front
-    add_edge(polygons, x, y, z, x1, y, z)
-    add_edge(polygons, x, y1, z, x1, y1, z)
-    add_edge(polygons, x1, y, z, x1, y1, z)
-    add_edge(polygons, x, y, z, x, y1, z)
+    p0 = [x, y, z]
+    p1 = [x, y1, z]
+    p2 = [x1, y, z]
+    p3 = [x1, y1, z]
+    add_polygon (polygons, p3[0], p3[1], p3[2], p0[0], p0[1], p0[2], p1[0], p1[1], p1[2])
+    add_polygon (polygons, p3[0], p3[1], p3[2], p1[0], p1[1], p1[2], p2[0], p2[1], p2[2])
 
     #back
-    add_edge(polygons, x, y, z1, x1, y, z1)
-    add_edge(polygons, x, y1, z1, x1, y1, z1)
-    add_edge(polygons, x1, y, z1, x1, y1, z1)
-    add_edge(polygons, x, y, z1, x, y1, z1)
+    p4 = [x, y, z1]
+    p5 = [x, y1, z1]
+    p6 = [x1, y1, z1]
+    p7 = [x1, y, z1]
+    add_polygon (polygons, p7[0], p7[1], p7[2], p4[0], p4[1], p4[2], p5[0], p5[1], p5[2])
+    add_polygon (polygons, p7[0], p7[1], p7[2], p5[0], p5[1], p5[2], p6[0], p6[1], p6[2])
 
-    #sides
-    add_edge(polygons, x, y, z, x, y, z1)
-    add_edge(polygons, x1, y, z, x1, y, z1)
-    add_edge(polygons, x, y1, z, x, y1, z1)
-    add_edge(polygons, x1, y1, z, x1, y1, z1)
+    #top
+    add_polygon (polygons, p7[0], p7[1], p7[2], p4[0], p4[1], p4[2], p3[0], p3[1], p3[2])
+    add_polygon (polygons, p4[0], p4[1], p4[2], p0[0], p0[1], p0[2], p3[0], p3[1], p3[2])
+
+    #bottom
+    add_polygon (polygons, p6[0], p6[1], p6[2], p5[0], p5[1], p5[2], p1[0], p1[1], p1[2])
+    add_polygon (polygons, p5[0], p5[1], p5[2], p1[0], p1[1], p1[2], p2[0], p2[1], p2[2])
+
+    #left
+    add_polygon (polygons, p0[0], p0[1], p0[2], p4[0], p4[1], p4[2], p1[0], p1[1], p1[2])
+    add_polygon (polygons, p4[0], p4[1], p4[2], p5[0], p5[1], p5[2], p1[0], p1[1], p1[2])
+
+    #right
+    add_polygon (polygons, p7[0], p7[1], p7[2], p3[0], p3[1], p3[2], p6[0], p6[1], p6[2])
+    add_polygon (polygons, p3[0], p3[1], p3[2], p2[0], p2[1], p2[2], p6[0], p6[1], p6[2])
 
 def add_sphere(polygons, cx, cy, cz, r, steps ):
     points = generate_sphere(cx, cy, cz, r, steps)
