@@ -36,8 +36,8 @@ def add_box( polygons, x, y, z, width, height, depth ):
     #front
     p0 = [x, y, z]
     p1 = [x, y1, z]
-    p2 = [x1, y, z]
-    p3 = [x1, y1, z]
+    p2 = [x1, y1, z]
+    p3 = [x1, y, z]
     add_polygon (polygons, p3[0], p3[1], p3[2], p0[0], p0[1], p0[2], p1[0], p1[1], p1[2])
     add_polygon (polygons, p3[0], p3[1], p3[2], p1[0], p1[1], p1[2], p2[0], p2[1], p2[2])
 
@@ -54,7 +54,7 @@ def add_box( polygons, x, y, z, width, height, depth ):
     add_polygon (polygons, p4[0], p4[1], p4[2], p0[0], p0[1], p0[2], p3[0], p3[1], p3[2])
 
     #bottom
-    add_polygon (polygons, p6[0], p6[1], p6[2], p5[0], p5[1], p5[2], p1[0], p1[1], p1[2])
+    add_polygon (polygons, p6[0], p6[1], p6[2], p5[0], p5[1], p5[2], p2[0], p2[1], p2[2])
     add_polygon (polygons, p5[0], p5[1], p5[2], p1[0], p1[1], p1[2], p2[0], p2[1], p2[2])
 
     #left
