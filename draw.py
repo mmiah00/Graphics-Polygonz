@@ -99,18 +99,6 @@ def add_sphere(polygons, cx, cy, cz, r, steps ):
                     add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], pmn[0], pmn[1], pmn[2],)
                     add_polygon(polygons, p[0], p[1], p[2], pmn1[0], pmn1[1], pmn1[2], pmn[0], pmn[1], pmn[2])
 
-            # try:
-            #     p = points[index]
-            #     p1 = points[index + 1]
-            #     p1n = points[index + 1 + steps + 1]
-            #     pn = points [index + steps + 1]
-            #
-            #     add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
-            #     add_polygon (polygons, p[0], p[1], p[2], p1n [0], p1n[1], p1n[2], pn [0], pn[1], pn[2])
-            # except:
-            #     add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
-
-
 def generate_sphere( cx, cy, cz, r, steps ):
     points = []
 
@@ -144,16 +132,31 @@ def add_torus(polygons, cx, cy, cz, r0, r1, steps ):
         for longt in range(longt_start, longt_stop):
             index = lat * steps + longt
 
-            try:
+            if(lat != lat_stop-1):
                 p = points[index]
-                pn = points[index + steps]
-                pn1 = points[index + steps+ 1]
-                p1 = points [index + 1]
-
-                add_polygon (polygons, p[0], p[1], p[2], pn[0], pn[1], pn[2], pn1[0], pn1[1], pn1[2])
-                add_polygon (polygons, p[0], p[1], p[2], pn1[0], pn1[1], pn1[2], p1[0], p1[1], p1[2])
-            except:
-                add_polygon (polygons, p[0], p[1], p[2], pn[0], pn[1], pn[2], pn1[0], pn1[1], pn1[2])
+                if(longt != longt_stop-1):
+                    pn = points[index + steps]
+                    pn1 = points [index + steps + 1]
+                    p1 = points [index + 1]
+                    add_polygon(polygons, p[0], p[1], p[2], pn[0], pn[1], pn[2], pn1[0], pn1[1], pn1[2])
+                    add_polygon(polygons, p[0], p[1], p[2], pn1[0], pn1[1], pn1[2], p1[0], p1[1], p1[2])
+                else:
+                    pn = points[index + steps]
+                    p1 = points[index + 1]
+                    d = points [index - steps]
+                    add_polygon(polygons, p[0], p[1], p[2], pn[0], pn[1], pn[2], p1[0], p1[1], p1[2])
+                    add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], d[0], d[1], d[2])
+            else:
+                p = points[index]
+                if(longt != longt_stop-1):
+                    pmn = points[index % steps]
+                    pmn1 = points[index % steps + 1]
+                    add_polygon(polygons, p[0], p[1], p[2], pmn[0], pmn[1], pmn[2], pmn1[0], pmn1[1], pmn1[2])
+                    add_polygon(polygons, p[0], p[1], p[2], pmn1[0], pmn1[1], pmn1[2], p1[0], p1[1], p1[2])
+                elif(longt == longt_stop-2):
+                    pmn = points[index % steps]
+                    add_polygon(polygons, p[0], p[1], p[2], pmn[0], pmn[1], pmn[2], points[0][0], points[0][1], points[0][2])
+                    add_polygon(polygons, p[0], p[1], p[2], points[0][0], points[0][1], points[0][2], p1[0], p1[1], p1[2])
 
 def generate_torus( cx, cy, cz, r0, r1, steps ):
     points = []
