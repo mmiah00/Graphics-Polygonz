@@ -75,19 +75,40 @@ def add_sphere(polygons, cx, cy, cz, r, steps ):
 
     steps+= 1
     for lat in range(lat_start, lat_stop):
-        for longt in range(longt_start, longt_stop+1):
+        for longt in range(longt_start, longt_stop):
             index = lat * steps + longt
 
-            try:
+            if(lat != lat_stop-1):
                 p = points[index]
-                p1 = points[index + 1]
-                p1n = points[index + 1 + steps + 1]
-                pn = points [index + steps + 1]
+                p1 = points[index + 1] #point + 1
+                pn = points[index + steps] #point + num steps
+                p1n = points[index + steps + 1] #point + num steps + 1
 
-                add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
-                add_polygon (polygons, p[0], p[1], p[2], p1n [0], p1n[1], p1n[2], pn [0], pn[1], pn[2])
-            except:
-                add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
+                if(longt == lat_start):
+                    add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], pn[0], pn[1], pn[2])
+                else:
+                    add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], pn[0], pn[1], pn[2])
+                    add_polygon(polygons, p[0], p[1], p[2], p1n[0], p1n[1], p1n[2], pn[0], pn[1], pn[2])
+
+            else:
+                pmn = points[index % steps] #point mod n steps
+                pmn1 = points[index % steps + 1] #point mod n steps + 1
+                if(longt == lat_start):
+                    add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], pmn[0], pmn[1], pmn[2])
+                else:
+                    add_polygon(polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], pmn[0], pmn[1], pmn[2],)
+                    add_polygon(polygons, p[0], p[1], p[2], pmn1[0], pmn1[1], pmn1[2], pmn[0], pmn[1], pmn[2])
+
+            # try:
+            #     p = points[index]
+            #     p1 = points[index + 1]
+            #     p1n = points[index + 1 + steps + 1]
+            #     pn = points [index + steps + 1]
+            #
+            #     add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
+            #     add_polygon (polygons, p[0], p[1], p[2], p1n [0], p1n[1], p1n[2], pn [0], pn[1], pn[2])
+            # except:
+            #     add_polygon (polygons, p[0], p[1], p[2], p1[0], p1[1], p1[2], p1n [0], p1n[1], p1n[2])
 
 
 def generate_sphere( cx, cy, cz, r, steps ):
